@@ -21,18 +21,19 @@ public class App {
 
         //Pegar só os dados que interessam (Título, poster do filme,classificação)
         var parser = new JsonParser();
-        
         List<Map<String, String>> listaDeFilmes = parser.parse(body); 
         
         //Exibir e manipular os dados
         var geradora = new GeradoraDeFigurinhas();
-        for(Map<String, String> filme : listaDeFilmes){
 
-            String urlImagem = filme.get("image");
+        for(int i = 0; i < 10; i++){
+            Map<String, String> filme = listaDeFilmes.get(i);
+
+            String urlImagem = filme.get("image").replaceAll("(@+)(.*).jpg$", "$1.jpg");
             String title = filme.get("title");
 
             InputStream inputStream = new URL(urlImagem).openStream();
-            String nomeDoArquivo = title + ".png";
+            String nomeDoArquivo = "saida/" + title + ".png";
 
             geradora.cria(inputStream, nomeDoArquivo);
 
